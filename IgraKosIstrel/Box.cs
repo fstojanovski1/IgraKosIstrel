@@ -51,18 +51,16 @@ namespace IgraKosIstrel
             return false;
         }
 
-        public void drawBox(Pen p, Graphics g, int h)
+        public void drawBox(Graphics g, int h)
         {
             List<Point> polyPoints = new List<Point>();
             polyPoints.Add(new Point((int)Koordinati[0].X, h - (int)Koordinati[0].Y));
             polyPoints.Add(new Point((int)Koordinati[1].X, h - (int)Koordinati[1].Y));
             polyPoints.Add(new Point((int)Koordinati[2].X, h - (int)Koordinati[2].Y));
             polyPoints.Add(new Point((int)Koordinati[3].X, h - (int)Koordinati[3].Y));
-            //drawingArea.DrawPolygon(whitePen, polyPoints.ToArray());
-           // g.DrawPolygon(p, polyPoints.ToArray());
+
 
             g.DrawImage(Form1.ccube, (int)Koordinati[3].X, h - (int)Koordinati[3].Y);
-            //g.DrawPolygon(p, polyPoints.ToArray());
 
         }
 

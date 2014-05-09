@@ -14,6 +14,7 @@ namespace IgraKosIstrel
         public int angle;
         public SolidBrush br_red;
         public SolidBrush br_white;
+        public int factor;
         public Arc(Coordinate a, Coordinate b, int w1, int w2)
         {
             c1 = a;
@@ -22,7 +23,7 @@ namespace IgraKosIstrel
             width2 = w2;
             br_red = new SolidBrush(Color.Red);
             br_white = new SolidBrush(Color.White);
-
+            factor = -1;
         }
 
         public void drawArc(Graphics g, int h)
@@ -33,8 +34,11 @@ namespace IgraKosIstrel
 
         public void moveAngle(int d)
         {
-            angle -= d;
-            angle = angle % 120;
+            angle = angle + factor * d;
+            if (angle > 90) factor = -1;
+            else if (angle < -90) factor = 1;
+            
+            
         }
 
     }

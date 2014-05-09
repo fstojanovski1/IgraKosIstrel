@@ -16,6 +16,9 @@ namespace IgraKosIstrel
         public int w, h;
         public int score;
         public int lives;
+        public bool isInvisible;
+        public int disappear;
+        public int count;
 
         public World(int lvl, int Width, int Height)
         {
@@ -27,14 +30,30 @@ namespace IgraKosIstrel
             h = Height;
             score = 0;
             lives = 5;
+            isInvisible = false;
+            disappear = 0;
+            count = 0;
         }
 
         public void createLevel()
         {
-            if (level == 1)
+            if (level == 0)
             {
-                Random rand = new Random();
-            //Create circles
+                //Create 10 circles at random positions
+                Random rnd = new Random();
+                for (int i = 0; i < 10; i++)
+                {
+                    int x = rnd.Next(50, 600);
+                    int y = rnd.Next(50, 300);
+                    Coordinate c=new Coordinate(x,y);
+                    Circle circ = new Circle(39, c);
+                    circles.Add(circ);
+                }
+                //Circles created
+            }
+            else if (level == 1)
+            {
+                //Create circles
                 for (int i = 2; i < 7; i+=2)
                 {
                     for (int j = 0; j < 4; j+=2)
@@ -44,16 +63,53 @@ namespace IgraKosIstrel
                         circles.Add(circ);
                     }
                 }
-           //circles created!
+                //circles created!
 
                 //Create Boxes
                 for (int i = 1; i < 7; i += 2)
                 {
                     for (int j = 1; j < 4; j += 2)
                     {
+                            Coordinate c1 = new Coordinate(i * 95 + 50, j * 70 + 100);
+                            Coordinate c2 =new Coordinate(i * 95 + 103, j * 70 + 100);
+                            Coordinate c3= new Coordinate(i * 95 + 103, j * 70 + 153);
+                            Coordinate c4 = new Coordinate(i * 95 + 50, j * 70 + 153);
+                            List<Coordinate> tmpCoordBoxes = new List<Coordinate>();
+                            tmpCoordBoxes.Add(c1);
+                            tmpCoordBoxes.Add(c2);
+                            tmpCoordBoxes.Add(c3);
+                            tmpCoordBoxes.Add(c4);
+
+                            Box temp_box = new Box(tmpCoordBoxes, 10, true);
+                            boxes.Add(temp_box);
+                     }
+                }
+                //boxes created!
+                  
+
+             }
+            else if (level == 2)
+            {
+                //Create circles
+                for (int i = 2; i < 7; i += 2)
+                {
+                    for (int j = 0; j < 4; j += 2)
+                    {
+                        Coordinate c = new Coordinate(i * 95 + 70, j * 70 + 100);
+                        Circle circ = new Circle(39, c);
+                        circles.Add(circ);
+                    }
+                }
+                //circles created!
+
+                //Create Boxes
+                for (int i = 1; i < 7; i += 2)
+                {
+                    for (int j = 1; j < 4; j += 1)
+                    {
                         Coordinate c1 = new Coordinate(i * 95 + 50, j * 70 + 100);
-                        Coordinate c2 =new Coordinate(i * 95 + 103, j * 70 + 100);
-                        Coordinate c3= new Coordinate(i * 95 + 103, j * 70 + 153);
+                        Coordinate c2 = new Coordinate(i * 95 + 103, j * 70 + 100);
+                        Coordinate c3 = new Coordinate(i * 95 + 103, j * 70 + 153);
                         Coordinate c4 = new Coordinate(i * 95 + 50, j * 70 + 153);
                         List<Coordinate> tmpCoordBoxes = new List<Coordinate>();
                         tmpCoordBoxes.Add(c1);
@@ -66,7 +122,7 @@ namespace IgraKosIstrel
                     }
                 }
                 //boxes created!
-                  
+
 
             }
         }
@@ -78,13 +134,6 @@ namespace IgraKosIstrel
 
         public void drawWorldBefore(Graphics g, Arc arc)
         {
-
-            Pen blackPen = new Pen(Color.Black);
-            Pen redPen = new Pen(Color.Red);
-            Pen grayPen = new Pen(Color.Gray);
-            Pen whitePen = new Pen(Color.White);
-            
-
             using (g)
             {
                 g.FillRectangle(Brushes.White, new Rectangle(0, 0, w, h));
@@ -92,20 +141,33 @@ namespace IgraKosIstrel
 
                 for (int i = 0; i < boxes.Count; i++)
                 {
-                    if (boxes[i].Life == false)
-                    {
-                        boxes[i].drawBox(grayPen, g, h);
-                    }
-                    else
-                    {
-                        boxes[i].drawBox(blackPen, g, h);
-                    }
-
+                        boxes[i].drawBox(g, h);
                 }
                 //kraj na crtanje na kutiite
+                Random rnd = new Random();
                 for (int i = circles.Count - 1; i >= 0; i--)
                 {
-                    circles[i].drawCircle(blackPen, g, h);
+                    if (level == 2)
+                    {
+                        if (!isInvisible)
+                        {
+                            disappear = rnd.Next(0, circles.Count);
+                            isInvisible = true;
+                        }
+                        
+                        count++;
+                        if (count > 500)
+                        {
+                            count = 0;
+                            isInvisible = false;
+                            circles[disappear].disappear = false;
+                        }
+                        else
+                        {
+                            circles[disappear].disappear = true;
+                        }
+                    }
+                    circles[i].drawCircle(g, h);
                 }
 
                 //Bitmap resource_cannon = IgraKosIstrel.Properties.Resources.cannon;
@@ -124,15 +186,14 @@ namespace IgraKosIstrel
         public void drawWorldAfter(Graphics g, ShootingBall ball, Timer timer2, List<Coordinate> states, Button b)
         {
             Pen blackPen = new Pen(Color.Black);
-            Pen redPen = new Pen(Color.Red);
-            Pen grayPen = new Pen(Color.Gray);
-            if (ball.coordinate.Y < 0 || ball.coordinate.Y > h - 10 || ball.coordinate.X>w)
+            if (ball.coordinate.Y < 0 || ball.coordinate.Y > h - 10 || ball.coordinate.X>w || ball.coordinate.X<0)
             {
                 timer2.Enabled = false;
                 
                 if (lives > 0)
                 {
                     lives--;
+                    b.PerformClick();
                 }
                 else
                 {
@@ -151,19 +212,24 @@ namespace IgraKosIstrel
             ball.Update_Angle(tmp1);
             ball.Update_Coordinate(tmp1);
 
-            if (Box.isInsideList(boxes, ball.coordinate))
+            if (!Form1.startCounting)
             {
-                Form1.startCounting = true;
-                if (lives > 0)
+                if (Box.isInsideList(boxes, ball.coordinate))
                 {
-                    lives--;
-                }
-                else
-                {
-                    b.Enabled = false;
-                }
+                    Form1.startCounting = true;
+                    if (lives > 0)
+                    {
+                        lives--;
+                    }
+                    else
+                    {
+                        b.Enabled = false;
+                    }
 
+                }
             }
+
+            
             if (Form1.startCounting == false)
             {
                 for (int i = circles.Count - 1; i >= 0; i--)
@@ -183,20 +249,34 @@ namespace IgraKosIstrel
                 g.DrawImage(Form1.backgroundPortal, 0, 0);
                 for (int i = 0; i < boxes.Count; i++)
                 {
-                    if (boxes[i].Life == false)
-                    {
-                        boxes[i].drawBox(grayPen, g, h);
-                    }
-                    else
-                    {
-                        boxes[i].drawBox(blackPen, g, h);
-                    }
+                        boxes[i].drawBox(g, h);
 
                 }
                 //kraj na crtanje na kutiite
-                for (int i = circles.Count-1; i>=0; i--)
+                Random rnd = new Random();
+                for (int i = circles.Count - 1; i >= 0; i--)
                 {
-                    circles[i].drawCircle(blackPen, g, h);
+                    if (level == 2)
+                    {
+                        if (!isInvisible)
+                        {
+                            disappear = rnd.Next(0, circles.Count-1);
+                            isInvisible = true;
+                        }
+
+                        count++;
+                        if (count > 300)
+                        {
+                            count = 0;
+                            isInvisible = false;
+                            circles[disappear].disappear = false;
+                        }
+                        else
+                        {
+                            circles[disappear].disappear = true;
+                        }
+                    }
+                    circles[i].drawCircle(g, h);
                 }
                 foreach (Coordinate k in states)
                 {
@@ -218,7 +298,10 @@ namespace IgraKosIstrel
                     Form1.explosionsOrder++;
                 }
                 if (Form1.explosionsOrder > 10)
+                {
                     timer2.Enabled = false;
+                    b.PerformClick();
+                }
 
                 if(Form1.explosionsOrder>=0)
                     g.DrawImage(Form1.explosionArray[Form1.explosionsOrder], (int)ball.coordinate.X - 10, h - (int)ball.coordinate.Y - 11);

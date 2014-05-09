@@ -42,21 +42,18 @@ namespace IgraKosIstrel
 
         public double calcDY(double time)
         {
-
-            //return Brzina * (time) * Math.Sin(Agol * (Math.PI / 180)) - ((ZemjinoZabrzuvanje * Math.Pow((time), 2)) / 2);
             return velocity * (time) * Math.Sin(angle * (Math.PI / 180)) - ((earthAcceleration * Math.Pow((time), 2)) / 2);
         }
 
-        public void Update_Angle(Coordinate tmp1)
+        public void Update_Angle(Coordinate c)
         {
-            this.angle = -Math.Atan(-(tmp1.Y - 0) / (tmp1.X - 0)) * (180 / Math.PI);
-            // this.Agol = +Math.Atan(-(tmp1.Y - 0) / (tmp1.X - 0)) * (180 / Math.PI);
+            this.angle = -Math.Atan(-(c.Y - 0) / (c.X - 0)) * (180 / Math.PI);
         }
 
-        public void Update_Coordinate(Coordinate tmp1)
+        public void Update_Coordinate(Coordinate c)
         {
-            this.coordinate.X += tmp1.X;
-            this.coordinate.Y += tmp1.Y;
+            this.coordinate.X += c.X;
+            this.coordinate.Y += c.Y;
         }
     }
 }
