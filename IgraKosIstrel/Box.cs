@@ -38,13 +38,13 @@ namespace IgraKosIstrel
             return c;
         }
 
-        public static bool isInsideLista(List<Box> listaKutii, Coordinate k)
+        public static bool isInsideList(List<Box> boxList, Coordinate k)
         {
-            for (int i = 0; i < listaKutii.Count; i++)
+            for (int i = boxList.Count-1; i >=0; i--)
             {
-                if (listaKutii[i].isInside(k) && listaKutii[i].Life == true)
+                if (boxList[i].isInside(k))
                 {
-                    listaKutii[i].Life = false;
+                    boxList.RemoveAt(i);
                     return true;
                 }
             }
@@ -59,7 +59,47 @@ namespace IgraKosIstrel
             polyPoints.Add(new Point((int)Koordinati[2].X, h - (int)Koordinati[2].Y));
             polyPoints.Add(new Point((int)Koordinati[3].X, h - (int)Koordinati[3].Y));
             //drawingArea.DrawPolygon(whitePen, polyPoints.ToArray());
-            g.DrawPolygon(p, polyPoints.ToArray());
+           // g.DrawPolygon(p, polyPoints.ToArray());
+
+            g.DrawImage(Form1.ccube, (int)Koordinati[3].X, h - (int)Koordinati[3].Y);
+            //g.DrawPolygon(p, polyPoints.ToArray());
+
+        }
+
+        public void updateBoxVerticaly(int dy)
+        {
+            for (int i = 0; i < Koordinati.Count; i++)
+            {
+                Koordinati[i].Y += dy;
+            }
+        }
+
+        public void updateBoxHorizontaly(int dx)
+        {
+            for (int i = 0; i < Koordinati.Count; i++)
+            {
+                Koordinati[i].X += dx;
+            }
+        }
+
+        public static void updateAllBoxes(List<Box> boxes,int dx, int dy,int height,int width)
+        {
+            for (int i = 0; i < boxes.Count; i++)
+            {
+                boxes[i].updateBoxHorizontaly(dx);
+                boxes[i].updateBoxVerticaly(dy);
+
+                int sum = 0;
+
+                for (int j = 0; j < boxes[i].Koordinati.Count; j++)
+                {
+                    if (boxes[i].Koordinati[j].Y < 0)
+                    { sum++; }
+                }
+                if (sum == 4)
+                    boxes[i].updateBoxVerticaly(height);
+
+            }
         }
 
     }

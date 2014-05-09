@@ -58,6 +58,5 @@ namespace IgraKosIstrel
             this.coordinate.X += tmp1.X;
             this.coordinate.Y += tmp1.Y;
         }
-
     }
 }

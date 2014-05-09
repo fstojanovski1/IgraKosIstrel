@@ -11,46 +11,62 @@ namespace IgraKosIstrel
     public class World
     {
         public List<Box> boxes { get; set; }
+        public List<Circle> circles { get; set; }
         public int level;
         public int w, h;
+        public int score;
+        public int lives;
 
         public World(int lvl, int Width, int Height)
         {
             boxes = new List<Box>();
+            circles = new List<Circle>();
             level = lvl;
             createLevel();
             w = Width;
             h = Height;
+            score = 0;
+            lives = 5;
         }
 
         public void createLevel()
         {
             if (level == 1)
             {
-                Coordinate k1 = new Coordinate(120, 140);
-                Coordinate k2 = new Coordinate(170, 140);
-                Coordinate k3 = new Coordinate(170, 151);
-                Coordinate k4 = new Coordinate(120, 151);
-                List<Coordinate> list1 = new List<Coordinate>();
-                list1.Add(k1);
-                list1.Add(k2);
-                list1.Add(k3);
-                list1.Add(k4);
-                Box box1 = new Box(list1, 10, true);
-                addBox(box1);
+                Random rand = new Random();
+            //Create circles
+                for (int i = 2; i < 7; i+=2)
+                {
+                    for (int j = 0; j < 4; j+=2)
+                    {
+                        Coordinate c = new Coordinate(i * 95 + 70, j*70+100);
+                        Circle circ = new Circle(39, c);
+                        circles.Add(circ);
+                    }
+                }
+           //circles created!
 
-                List<Coordinate> list2 = new List<Coordinate>();
-                Coordinate k5 = new Coordinate(50, 50);
-                Coordinate k6 = new Coordinate(150 + w / 4, 50);
-                Coordinate k7 = new Coordinate(100 + w / 4, 200);
-                Coordinate k8 = new Coordinate(50 + w / 4, 200);
+                //Create Boxes
+                for (int i = 1; i < 7; i += 2)
+                {
+                    for (int j = 1; j < 4; j += 2)
+                    {
+                        Coordinate c1 = new Coordinate(i * 95 + 50, j * 70 + 100);
+                        Coordinate c2 =new Coordinate(i * 95 + 103, j * 70 + 100);
+                        Coordinate c3= new Coordinate(i * 95 + 103, j * 70 + 153);
+                        Coordinate c4 = new Coordinate(i * 95 + 50, j * 70 + 153);
+                        List<Coordinate> tmpCoordBoxes = new List<Coordinate>();
+                        tmpCoordBoxes.Add(c1);
+                        tmpCoordBoxes.Add(c2);
+                        tmpCoordBoxes.Add(c3);
+                        tmpCoordBoxes.Add(c4);
 
-                list2.Add(k5);
-                list2.Add(k6);
-                list2.Add(k7);
-                list2.Add(k8);
-                Box box2 = new Box(list2, 20, true);
-                addBox(box2);
+                        Box temp_box = new Box(tmpCoordBoxes, 10, true);
+                        boxes.Add(temp_box);
+                    }
+                }
+                //boxes created!
+                  
 
             }
         }
@@ -66,13 +82,14 @@ namespace IgraKosIstrel
             Pen blackPen = new Pen(Color.Black);
             Pen redPen = new Pen(Color.Red);
             Pen grayPen = new Pen(Color.Gray);
-
-            List<Point> polySostojbi = new List<Point>();
-            //pocetok na crtanje na kutiite
+            Pen whitePen = new Pen(Color.White);
+            
 
             using (g)
             {
                 g.FillRectangle(Brushes.White, new Rectangle(0, 0, w, h));
+                g.DrawImage(Form1.backgroundPortal, 0, 0);
+
                 for (int i = 0; i < boxes.Count; i++)
                 {
                     if (boxes[i].Life == false)
@@ -86,42 +103,84 @@ namespace IgraKosIstrel
 
                 }
                 //kraj na crtanje na kutiite
+                for (int i = circles.Count - 1; i >= 0; i--)
+                {
+                    circles[i].drawCircle(blackPen, g, h);
+                }
 
-                Bitmap resource_cannon = IgraKosIstrel.Properties.Resources.cannon;
+                //Bitmap resource_cannon = IgraKosIstrel.Properties.Resources.cannon;
 
-                resource_cannon.MakeTransparent();
+                //resource_cannon.MakeTransparent();
 
-                g.DrawImage(resource_cannon, 0, h - 50);
+                g.DrawImage(Form1.ccanon, (int)Form1.cannonCoordinate.X, (int)Form1.cannonCoordinate.Y);
 
                 arc.drawArc(g, h);
                 arc.moveAngle(1);
 
             }
+            Box.updateAllBoxes(boxes, 0, -1, h, w);
         }
 
-        public void drawWorldAfter(Graphics g, ShootingBall ball, Timer timer2, List<Coordinate> states)
+        public void drawWorldAfter(Graphics g, ShootingBall ball, Timer timer2, List<Coordinate> states, Button b)
         {
             Pen blackPen = new Pen(Color.Black);
             Pen redPen = new Pen(Color.Red);
             Pen grayPen = new Pen(Color.Gray);
-            if (ball.coordinate.Y < 0 || ball.coordinate.Y > h - 10)
+            if (ball.coordinate.Y < 0 || ball.coordinate.Y > h - 10 || ball.coordinate.X>w)
             {
                 timer2.Enabled = false;
-
+                
+                if (lives > 0)
+                {
+                    lives--;
+                }
+                else
+                {
+                    b.Enabled = false;
+                }
             }
-            Coordinate tmp1 = new Coordinate(ball.calcX(1.0 / 24, true), ball.calcY(1.0 / 24, 0, true));
+
+            //resources
+            Bitmap resource_coin = IgraKosIstrel.Properties.Resources.image01;
+            //
+
+
+            //Coordinate tmp1 = new Coordinate(ball.calcX(1.0 / 24, true), ball.calcY(1.0 / 24, 0, true));
+            Coordinate tmp1 = new Coordinate(ball.calcX(1.0/5, true), ball.calcY(1.0/5, 0, true));
+            
             ball.Update_Angle(tmp1);
             ball.Update_Coordinate(tmp1);
 
-            if (Box.isInsideLista(boxes, ball.coordinate))
+            if (Box.isInsideList(boxes, ball.coordinate))
             {
-                timer2.Enabled = false;
+                Form1.startCounting = true;
+                if (lives > 0)
+                {
+                    lives--;
+                }
+                else
+                {
+                    b.Enabled = false;
+                }
+
+            }
+            if (Form1.startCounting == false)
+            {
+                for (int i = circles.Count - 1; i >= 0; i--)
+                {
+                    if (circles[i].isInside(ball.coordinate))
+                    {
+                        circles.RemoveAt(i);
+                        score++;
+                    }
+                }
             }
             states.Add(new Coordinate(ball.coordinate.X, h - ball.coordinate.Y));
             List<Point> polySostojbi = new List<Point>();
             using (g)
             {
-                g.FillRectangle(Brushes.White, new Rectangle(0, 0, w, h));
+                //g.FillRectangle(Brushes.White, new Rectangle(0, 0, w, h));
+                g.DrawImage(Form1.backgroundPortal, 0, 0);
                 for (int i = 0; i < boxes.Count; i++)
                 {
                     if (boxes[i].Life == false)
@@ -135,6 +194,10 @@ namespace IgraKosIstrel
 
                 }
                 //kraj na crtanje na kutiite
+                for (int i = circles.Count-1; i>=0; i--)
+                {
+                    circles[i].drawCircle(blackPen, g, h);
+                }
                 foreach (Coordinate k in states)
                 {
                     polySostojbi.Add(new Point((int)k.X, (int)k.Y));
@@ -145,15 +208,23 @@ namespace IgraKosIstrel
                     g.DrawCurve(blackPen, polySostojbi.ToArray());
                 SolidBrush br = new SolidBrush(Color.Red);
 
-                Bitmap resource_cannon = IgraKosIstrel.Properties.Resources.cannon;
-                Bitmap resource_cannonBall = IgraKosIstrel.Properties.Resources.cannonBall;
+                g.DrawImage(Form1.ccanon,(int)Form1.cannonCoordinate.X,(int)Form1.cannonCoordinate.Y);
+                if(Form1.startCounting!=true)
+                g.DrawImage(Form1.cannonArray[Form1.pictureOrder], (int)ball.coordinate.X - 10, h - (int)ball.coordinate.Y - 11);
+                Form1.pictureOrder=(Form1.pictureOrder+1)%8;
 
-                resource_cannonBall.MakeTransparent();
-                resource_cannon.MakeTransparent();
+                if (Form1.startCounting == true)
+                {
+                    Form1.explosionsOrder++;
+                }
+                if (Form1.explosionsOrder > 10)
+                    timer2.Enabled = false;
 
-                g.DrawImage(resource_cannon, 0, h - 50);
-                g.DrawImage(resource_cannonBall, (int)ball.coordinate.X - 10, h - (int)ball.coordinate.Y - 11);
+                if(Form1.explosionsOrder>=0)
+                    g.DrawImage(Form1.explosionArray[Form1.explosionsOrder], (int)ball.coordinate.X - 10, h - (int)ball.coordinate.Y - 11);
+
             }
+            Box.updateAllBoxes(boxes, 0, -1,h,w);
         }
 
     }
