@@ -216,7 +216,6 @@ namespace IgraKosIstrel
                     if (lives > 0)
                     {
                         lives--;
-                        b.PerformClick();
                     }
                     else
                     {
