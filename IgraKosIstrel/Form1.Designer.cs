@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.pbBackground = new System.Windows.Forms.PictureBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnPlay = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.tbScore = new System.Windows.Forms.TextBox();
             this.timer2 = new System.Windows.Forms.Timer(this.components);
@@ -52,15 +52,15 @@
             this.pbBackground.TabStop = false;
             this.pbBackground.Click += new System.EventHandler(this.pictureBox1_MouseClick);
             // 
-            // button1
+            // btnPlay
             // 
-            this.button1.Location = new System.Drawing.Point(13, 387);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Play";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnPlay.Location = new System.Drawing.Point(13, 387);
+            this.btnPlay.Name = "btnPlay";
+            this.btnPlay.Size = new System.Drawing.Size(75, 23);
+            this.btnPlay.TabIndex = 1;
+            this.btnPlay.Text = "Play";
+            this.btnPlay.UseVisualStyleBackColor = true;
+            this.btnPlay.Click += new System.EventHandler(this.button1_Click);
             // 
             // timer1
             // 
@@ -144,7 +144,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblScore);
             this.Controls.Add(this.tbScore);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnPlay);
             this.Controls.Add(this.pbBackground);
             this.Name = "Form1";
             this.Text = "Game of Balls";
@@ -157,7 +157,7 @@
         #endregion
 
         private System.Windows.Forms.PictureBox pbBackground;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnPlay;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.TextBox tbScore;
         private System.Windows.Forms.Timer timer2;

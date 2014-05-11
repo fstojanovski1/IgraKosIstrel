@@ -93,12 +93,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="cannon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="cannonBall.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\image01.gif" />
   </ItemGroup>
   <ItemGroup>
@@ -172,6 +166,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\orange_vortex.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cannon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cannonBall.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -121,14 +121,8 @@
   <data name="background_portal" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\background_portal.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="cannon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\cannon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="ccube" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ccube.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="image01" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\image01.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="orange_vortex" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\orange_vortex.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -195,5 +189,11 @@
   </data>
   <data name="_8" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\8.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="cannon1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\cannon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="cannonBall" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\cannonBall.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

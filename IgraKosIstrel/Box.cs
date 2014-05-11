@@ -34,7 +34,8 @@ namespace IgraKosIstrel
             return c;
         }
 
-        public static bool isInsideList(List<Box> boxList, Coordinate k) //checks whether a point is inside of any polygon in a list
+        public static bool isInsideList(List<Box> boxList, Coordinate k) 
+            //checks whether a point is inside of any polygon in a list
         {
             for (int i = boxList.Count-1; i >=0; i--)
             {
@@ -47,11 +48,7 @@ namespace IgraKosIstrel
             return false;
         }
 
-<<<<<<< HEAD
         public void drawBox(Graphics g, int h) //draws the image of a cube
-=======
-        public void drawBox(Graphics g, int h)
->>>>>>> e1a9f008927e9d12dcce8a88968053020029f007
         {
             List<Point> polyPoints = new List<Point>();
             polyPoints.Add(new Point((int)Koordinati[0].X, h - (int)Koordinati[0].Y));
@@ -73,7 +70,8 @@ namespace IgraKosIstrel
         }
 
         public static void updateAllBoxes(List<Box> boxes, int dy,int height,int width)
-            //implements the moving of the boxes from the top to the bottom, reappearing in the top every time they go down
+            //implements the moving of the boxes from the top to the bottom, 
+            //reappearing on the top every time they go down
         {
             for (int i = 0; i < boxes.Count; i++)
             {

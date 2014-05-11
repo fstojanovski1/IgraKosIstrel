@@ -80,11 +80,7 @@ namespace IgraKosIstrel
                             tmpCoordBoxes.Add(c3);
                             tmpCoordBoxes.Add(c4);
 
-<<<<<<< HEAD
                             Box temp_box = new Box(tmpCoordBoxes);
-=======
-                            Box temp_box = new Box(tmpCoordBoxes, 10, true);
->>>>>>> e1a9f008927e9d12dcce8a88968053020029f007
                             boxes.Add(temp_box);
                      }
                 }
@@ -147,12 +143,8 @@ namespace IgraKosIstrel
                 {
                         boxes[i].drawBox(g, h);
                 }
-<<<<<<< HEAD
                 //boxes drawn!
 
-=======
-                //kraj na crtanje na kutiite
->>>>>>> e1a9f008927e9d12dcce8a88968053020029f007
                 Random rnd = new Random();
                 for (int i = circles.Count - 1; i >= 0; i--)
                 {
@@ -189,7 +181,7 @@ namespace IgraKosIstrel
             Box.updateAllBoxes(boxes, -1, h, w);
         }
 
-        public void drawWorldAfter(Graphics g, ShootingBall ball, Timer timer2, List<Coordinate> states, Button b)
+        public void drawWorldAfter(Graphics g, ShootingBall ball, Timer timer2, List<Coordinate> states, Button b, Button r)
             //draws the world after the cannon has been shot with its trajectory
         {
             Pen blackPen = new Pen(Color.Black);
@@ -204,13 +196,12 @@ namespace IgraKosIstrel
                 }
                 else
                 {
+                    MessageBox.Show("You lost!");
                     b.Enabled = false;
                 }
             }
 
             //resources
-            Bitmap resource_coin = IgraKosIstrel.Properties.Resources.image01;
-            
 
             Coordinate tmp1 = new Coordinate(ball.calcX(1.0/5, true), ball.calcY(1.0/5, 0, true));
             
@@ -225,9 +216,11 @@ namespace IgraKosIstrel
                     if (lives > 0)
                     {
                         lives--;
+                        b.PerformClick();
                     }
                     else
                     {
+                        MessageBox.Show("You lost!");
                         b.Enabled = false;
                     }
 
@@ -244,6 +237,13 @@ namespace IgraKosIstrel
                         circles.RemoveAt(i);
                         score++;
                     }
+                }
+                if (circles.Count == 0)
+                {
+                    r.PerformClick();
+                    MessageBox.Show("You won!");
+                    
+                    
                 }
             }
             states.Add(new Coordinate(ball.coordinate.X, h - ball.coordinate.Y));
@@ -274,18 +274,12 @@ namespace IgraKosIstrel
                         {
                             count = 0;
                             isInvisible = false;
-<<<<<<< HEAD
                             if (disappear < circles.Count)
-=======
->>>>>>> e1a9f008927e9d12dcce8a88968053020029f007
                             circles[disappear].disappear = false;
                         }
                         else
                         {
-<<<<<<< HEAD
                             if(disappear<circles.Count)
-=======
->>>>>>> e1a9f008927e9d12dcce8a88968053020029f007
                             circles[disappear].disappear = true;
                         }
                     }

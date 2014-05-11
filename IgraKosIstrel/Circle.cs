@@ -34,11 +34,7 @@ namespace IgraKosIstrel
             }
         }
 
-<<<<<<< HEAD
         public void drawCircle(Graphics g, int h) // in this case draws the vortex
-=======
-        public void drawCircle(Graphics g, int h)
->>>>>>> e1a9f008927e9d12dcce8a88968053020029f007
         {
             if(!disappear)
             g.DrawImage(Form1.orangeVortex, (int)(c.X - radius-1), h - (int)(c.Y + radius+1));

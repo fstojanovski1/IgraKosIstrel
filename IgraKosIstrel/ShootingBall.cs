@@ -29,7 +29,6 @@ namespace IgraKosIstrel
         public double calcY(double time, double prevousValue, bool vred)
             //Calculating the change over Y axis
         {
-<<<<<<< HEAD
             return 2 * velocity * (time) * Math.Sin(angle * (Math.PI / 180)) - ((earthAcceleration * Math.Pow((time), 2)) / 2);
         }
         
@@ -41,22 +40,6 @@ namespace IgraKosIstrel
         
         public void Update_Coordinate(Coordinate c)
             //Updating the coordinate according to the next position in the trajectory
-=======
-            return velocity * (time) * Math.Sin(angle * (Math.PI / 180)) - ((earthAcceleration * Math.Pow((time), 2)) / 2);
-        }
-
-        public double calcDY(double time)
-        {
-            return velocity * (time) * Math.Sin(angle * (Math.PI / 180)) - ((earthAcceleration * Math.Pow((time), 2)) / 2);
-        }
-
-        public void Update_Angle(Coordinate c)
-        {
-            this.angle = -Math.Atan(-(c.Y - 0) / (c.X - 0)) * (180 / Math.PI);
-        }
-
-        public void Update_Coordinate(Coordinate c)
->>>>>>> e1a9f008927e9d12dcce8a88968053020029f007
         {
             this.coordinate.X += c.X;
             this.coordinate.Y += c.Y;
