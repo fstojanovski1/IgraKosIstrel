@@ -45,7 +45,11 @@ namespace IgraKosIstrel
         public void Init(int difficulty)
         {
             bufl = new Bitmap(pbBackground.Width, pbBackground.Height);
+<<<<<<< HEAD
             ball = new ShootingBall(new Coordinate(38, 43), 85, 30);
+=======
+            ball = new ShootingBall(new Coordinate(38, 43), 10, 85, 30);
+>>>>>>> e1a9f008927e9d12dcce8a88968053020029f007
             w = new World(difficulty, pbBackground.Width, pbBackground.Height);
             arc = new Arc(new Coordinate(38, pbBackground.Height - 78), 
                 new Coordinate(43, pbBackground.Height - 73), 60, 50);
@@ -91,13 +95,21 @@ namespace IgraKosIstrel
         public void startup()
         {
             time = 0;
+<<<<<<< HEAD
             timer1.Interval = 20;
+=======
+            timer1.Interval = 10;
+>>>>>>> e1a9f008927e9d12dcce8a88968053020029f007
             timer1.Enabled = true;
             timer1.Start();
             firstTime = true;
             timer2.Enabled = false;
             ball = new ShootingBall(new Coordinate(48, (pbBackground.Height - cannonCoordinate.Y - 2)),
+<<<<<<< HEAD
                 85, int.Parse(tbSpeed.Text));
+=======
+                10, 85, int.Parse(tbSpeed.Text));
+>>>>>>> e1a9f008927e9d12dcce8a88968053020029f007
 
 
 
@@ -153,7 +165,11 @@ namespace IgraKosIstrel
             if (firstTime)
             {
                 timer1.Enabled = false;
+<<<<<<< HEAD
                 timer2.Interval = 20;
+=======
+                timer2.Interval = 10;
+>>>>>>> e1a9f008927e9d12dcce8a88968053020029f007
                 timer2.Enabled = true;
                 timer2.Start();
                 ball.angle = -arc.angle;
@@ -245,7 +261,10 @@ namespace IgraKosIstrel
             w.score = 0;
             tbLives.Text = w.lives.ToString();
             tbScore.Text = w.score.ToString();
+<<<<<<< HEAD
             button1.Enabled = true;
+=======
+>>>>>>> e1a9f008927e9d12dcce8a88968053020029f007
             startup();
         }
 

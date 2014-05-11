@@ -15,7 +15,11 @@ namespace IgraKosIstrel
         public SolidBrush br_red;
         public SolidBrush br_white;
         public int factor;
+<<<<<<< HEAD
         public Arc(Coordinate a, Coordinate b, int w1, int w2) //constructor
+=======
+        public Arc(Coordinate a, Coordinate b, int w1, int w2)
+>>>>>>> e1a9f008927e9d12dcce8a88968053020029f007
         {
             c1 = a;
             c2 = b;

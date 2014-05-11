@@ -80,7 +80,11 @@ namespace IgraKosIstrel
                             tmpCoordBoxes.Add(c3);
                             tmpCoordBoxes.Add(c4);
 
+<<<<<<< HEAD
                             Box temp_box = new Box(tmpCoordBoxes);
+=======
+                            Box temp_box = new Box(tmpCoordBoxes, 10, true);
+>>>>>>> e1a9f008927e9d12dcce8a88968053020029f007
                             boxes.Add(temp_box);
                      }
                 }
@@ -143,8 +147,12 @@ namespace IgraKosIstrel
                 {
                         boxes[i].drawBox(g, h);
                 }
+<<<<<<< HEAD
                 //boxes drawn!
 
+=======
+                //kraj na crtanje na kutiite
+>>>>>>> e1a9f008927e9d12dcce8a88968053020029f007
                 Random rnd = new Random();
                 for (int i = circles.Count - 1; i >= 0; i--)
                 {
@@ -266,12 +274,18 @@ namespace IgraKosIstrel
                         {
                             count = 0;
                             isInvisible = false;
+<<<<<<< HEAD
                             if (disappear < circles.Count)
+=======
+>>>>>>> e1a9f008927e9d12dcce8a88968053020029f007
                             circles[disappear].disappear = false;
                         }
                         else
                         {
+<<<<<<< HEAD
                             if(disappear<circles.Count)
+=======
+>>>>>>> e1a9f008927e9d12dcce8a88968053020029f007
                             circles[disappear].disappear = true;
                         }
                     }
