@@ -19,6 +19,7 @@ namespace IgraKosIstrel
         public bool isInvisible;
         public int disappear;
         public int count;
+        public Circle invisible;
 
         public World(int lvl, int Width, int Height) //constructor
         {
@@ -154,18 +155,19 @@ namespace IgraKosIstrel
                         {
                             disappear = rnd.Next(0, circles.Count);
                             isInvisible = true;
+                            invisible = circles[disappear];
                         }
                         
                         count++;
-                        if (count > 500)
+                        if (count > 300)
                         {
                             count = 0;
                             isInvisible = false;
-                            circles[disappear].disappear = false;
+                            invisible.disappear = false;
                         }
                         else
                         {
-                            circles[disappear].disappear = true;
+                            invisible.disappear = true;
                         }
                     }
                     circles[i].drawCircle(g, h);
@@ -260,12 +262,13 @@ namespace IgraKosIstrel
                 Random rnd = new Random();
                 for (int i = circles.Count - 1; i >= 0; i--)
                 {
-                    if (level == 2)
+                    if (level == 2 && circles.Count > 1)
                     {
                         if (!isInvisible)
                         {
-                            disappear = rnd.Next(0, circles.Count-1);
+                            disappear = rnd.Next(0, circles.Count - 1);
                             isInvisible = true;
+                            invisible = circles[disappear];
                         }
 
                         count++;
@@ -273,14 +276,16 @@ namespace IgraKosIstrel
                         {
                             count = 0;
                             isInvisible = false;
-                            if (disappear < circles.Count)
-                            circles[disappear].disappear = false;
+                            invisible.disappear = false;
                         }
                         else
                         {
-                            if(disappear<circles.Count)
-                            circles[disappear].disappear = true;
+                            invisible.disappear = true;
                         }
+                    }
+                    else
+                    {
+                        invisible.disappear = false;
                     }
                     circles[i].drawCircle(g, h);
                 }
