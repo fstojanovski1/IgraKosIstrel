@@ -10,17 +10,13 @@ namespace IgraKosIstrel
     public class Box
     {
         public List<Coordinate> Koordinati { get; set; }
-        public double Masa { get; set; }
-        public bool Life { get; set; }
 
-        public Box(List<Coordinate> k, double masa, bool life)
+        public Box(List<Coordinate> k) //constructor
         {
             Koordinati = k;
-            Masa = masa;
-            Life = life;
         }
-
-        public bool isInside(Coordinate k)
+       
+        public bool isInside(Coordinate k) //checks whether a given point is inside the area of a polygon
         {
             int i, j;
             bool c = false;
@@ -38,7 +34,7 @@ namespace IgraKosIstrel
             return c;
         }
 
-        public static bool isInsideList(List<Box> boxList, Coordinate k)
+        public static bool isInsideList(List<Box> boxList, Coordinate k) //checks whether a point is inside of any polygon in a list
         {
             for (int i = boxList.Count-1; i >=0; i--)
             {
@@ -51,22 +47,20 @@ namespace IgraKosIstrel
             return false;
         }
 
-        public void drawBox(Pen p, Graphics g, int h)
+        public void drawBox(Graphics g, int h) //draws the image of a cube
         {
             List<Point> polyPoints = new List<Point>();
             polyPoints.Add(new Point((int)Koordinati[0].X, h - (int)Koordinati[0].Y));
             polyPoints.Add(new Point((int)Koordinati[1].X, h - (int)Koordinati[1].Y));
             polyPoints.Add(new Point((int)Koordinati[2].X, h - (int)Koordinati[2].Y));
             polyPoints.Add(new Point((int)Koordinati[3].X, h - (int)Koordinati[3].Y));
-            //drawingArea.DrawPolygon(whitePen, polyPoints.ToArray());
-           // g.DrawPolygon(p, polyPoints.ToArray());
+
 
             g.DrawImage(Form1.ccube, (int)Koordinati[3].X, h - (int)Koordinati[3].Y);
-            //g.DrawPolygon(p, polyPoints.ToArray());
 
         }
 
-        public void updateBoxVerticaly(int dy)
+        public void updateBoxVerticaly(int dy) //changes the y coordinates of a box for a given dy
         {
             for (int i = 0; i < Koordinati.Count; i++)
             {
@@ -74,19 +68,11 @@ namespace IgraKosIstrel
             }
         }
 
-        public void updateBoxHorizontaly(int dx)
-        {
-            for (int i = 0; i < Koordinati.Count; i++)
-            {
-                Koordinati[i].X += dx;
-            }
-        }
-
-        public static void updateAllBoxes(List<Box> boxes,int dx, int dy,int height,int width)
+        public static void updateAllBoxes(List<Box> boxes, int dy,int height,int width)
+            //implements the moving of the boxes from the top to the bottom, reappearing in the top every time they go down
         {
             for (int i = 0; i < boxes.Count; i++)
             {
-                boxes[i].updateBoxHorizontaly(dx);
                 boxes[i].updateBoxVerticaly(dy);
 
                 int sum = 0;

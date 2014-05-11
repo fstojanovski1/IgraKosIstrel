@@ -39,6 +39,7 @@
             this.tbLives = new System.Windows.Forms.TextBox();
             this.tbSpeed = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.btnRestart = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbBackground)).BeginInit();
             this.SuspendLayout();
             // 
@@ -121,11 +122,22 @@
             this.label2.TabIndex = 7;
             this.label2.Text = "Speed:";
             // 
+            // btnRestart
+            // 
+            this.btnRestart.Location = new System.Drawing.Point(598, 389);
+            this.btnRestart.Name = "btnRestart";
+            this.btnRestart.Size = new System.Drawing.Size(75, 23);
+            this.btnRestart.TabIndex = 8;
+            this.btnRestart.Text = "Restart";
+            this.btnRestart.UseVisualStyleBackColor = true;
+            this.btnRestart.Click += new System.EventHandler(this.btnRestart_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(714, 422);
+            this.Controls.Add(this.btnRestart);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.tbSpeed);
             this.Controls.Add(this.tbLives);
@@ -135,7 +147,7 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.pbBackground);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Game of Balls";
             ((System.ComponentModel.ISupportInitialize)(this.pbBackground)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -154,6 +166,7 @@
         private System.Windows.Forms.TextBox tbLives;
         private System.Windows.Forms.TextBox tbSpeed;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btnRestart;
 
     }
 }

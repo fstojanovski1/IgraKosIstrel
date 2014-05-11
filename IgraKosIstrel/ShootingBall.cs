@@ -9,54 +9,40 @@ namespace IgraKosIstrel
     public class ShootingBall
     {
         public Coordinate coordinate { get; set; }
-        public double mass { get; set; }
         public double angle { get; set; }
         public double velocity { get; set; }
         public const double earthAcceleration = 9.91;
 
-        public ShootingBall(Coordinate k, double m, double a, double v)
+        public ShootingBall(Coordinate k, double a, double v) //constructor
         {
             coordinate = k;
-            mass = m;
             angle = a;
             velocity = v;
         }
 
-        public double calcX(double time, bool vred)
+        public double calcX(double time, bool vred) 
+            //Calculating the change over X axis
         {
-            //    if(vred==true)
-            //    NloKoordinata.X = NloKoordinata.X + Brzina * time * Math.Cos(Agol * (Math.PI / 180));
-            //    return NloKoordinata.X;
-            return velocity * time * Math.Cos(angle * (Math.PI / 180));
+            return 2 * velocity * time * Math.Cos(angle * (Math.PI / 180));
         }
-
-        public double calcDX(double time)
-        {
-            return velocity * time * Math.Cos(angle * (Math.PI / 180));
-        }
-
+        
         public double calcY(double time, double prevousValue, bool vred)
+            //Calculating the change over Y axis
         {
-            return velocity * (time) * Math.Sin(angle * (Math.PI / 180)) - ((earthAcceleration * Math.Pow((time), 2)) / 2);
+            return 2 * velocity * (time) * Math.Sin(angle * (Math.PI / 180)) - ((earthAcceleration * Math.Pow((time), 2)) / 2);
         }
-
-        public double calcDY(double time)
+        
+        public void Update_Angle(Coordinate c)
+            //Updating the angle according to the next position in the trajectory
         {
-
-            //return Brzina * (time) * Math.Sin(Agol * (Math.PI / 180)) - ((ZemjinoZabrzuvanje * Math.Pow((time), 2)) / 2);
-            return velocity * (time) * Math.Sin(angle * (Math.PI / 180)) - ((earthAcceleration * Math.Pow((time), 2)) / 2);
+            this.angle = -Math.Atan(-(c.Y - 0) / (c.X - 0)) * (180 / Math.PI);
         }
-
-        public void Update_Angle(Coordinate tmp1)
+        
+        public void Update_Coordinate(Coordinate c)
+            //Updating the coordinate according to the next position in the trajectory
         {
-            this.angle = -Math.Atan(-(tmp1.Y - 0) / (tmp1.X - 0)) * (180 / Math.PI);
-            // this.Agol = +Math.Atan(-(tmp1.Y - 0) / (tmp1.X - 0)) * (180 / Math.PI);
-        }
-
-        public void Update_Coordinate(Coordinate tmp1)
-        {
-            this.coordinate.X += tmp1.X;
-            this.coordinate.Y += tmp1.Y;
+            this.coordinate.X += c.X;
+            this.coordinate.Y += c.Y;
         }
     }
 }

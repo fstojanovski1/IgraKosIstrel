@@ -12,11 +12,9 @@ namespace IgraKosIstrel
 {
     public partial class Form1 : Form
     {
-        Graphics drawingArea;
         ShootingBall ball;
         public static double time = 0;
-        List<Coordinate> states1;
-        List<Coordinate> states2;
+        List<Coordinate> states;
         public int a = 0;
         public static int ArrowAngle = 0;
         bool firstTime = false;
@@ -32,24 +30,26 @@ namespace IgraKosIstrel
         public static Bitmap ccanon;
         public static Bitmap backgroundPortal;
         public static Bitmap orangeVortex;
-
+        public static int level;
+        public static Bitmap bufl;
 
         public Form1()
         {
             InitializeComponent();
             Form2 f = new Form2();
             f.ShowDialog();
-            Init(f.selection);
+            level = f.selection;
+            Init(level);
         }
 
         public void Init(int difficulty)
         {
-            drawingArea = pbBackground.CreateGraphics();
-            ball = new ShootingBall(new Coordinate(38, 43), 10, 85, 30);
+            bufl = new Bitmap(pbBackground.Width, pbBackground.Height);
+            ball = new ShootingBall(new Coordinate(38, 43), 85, 30);
             w = new World(difficulty, pbBackground.Width, pbBackground.Height);
-            arc = new Arc(new Coordinate(38, pbBackground.Height - 78), new Coordinate(43, pbBackground.Height - 73), 60, 50);
-            states1 = new List<Coordinate>();
-            states2 = new List<Coordinate>();
+            arc = new Arc(new Coordinate(38, pbBackground.Height - 78), 
+                new Coordinate(43, pbBackground.Height - 73), 60, 50);
+            states = new List<Coordinate>();
             cannonCoordinate = new Coordinate(0, pbBackground.Height - 50);
 
             cannonArray[0] = IgraKosIstrel.Properties.Resources._1;
@@ -88,23 +88,29 @@ namespace IgraKosIstrel
             orangeVortex=IgraKosIstrel.Properties.Resources.orange_vortex;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        public void startup()
         {
             time = 0;
-            timer1.Interval = 1;
+            timer1.Interval = 20;
             timer1.Enabled = true;
             timer1.Start();
             firstTime = true;
             timer2.Enabled = false;
-            ball = new ShootingBall(new Coordinate(48, (pbBackground.Height - cannonCoordinate.Y - 2)), 10, 85, int.Parse(tbSpeed.Text));
-            
-            
+            ball = new ShootingBall(new Coordinate(48, (pbBackground.Height - cannonCoordinate.Y - 2)),
+                85, int.Parse(tbSpeed.Text));
 
-            states1 = new List<Coordinate>();
+
+
+            states = new List<Coordinate>();
             pictureOrder = 0;
             explosionsOrder = -1;
             startCounting = false;
             this.Focus();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            startup();
         }
 
         private void FormSMbp_Load(object sender, EventArgs e)
@@ -116,11 +122,9 @@ namespace IgraKosIstrel
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            Bitmap bufl = new Bitmap(pbBackground.Width, pbBackground.Height);
-
-            //proba samo
+            
+            
             ball.angle = -arc.angle;
-            //
 
             using (Graphics g = Graphics.FromImage(bufl))
             {
@@ -128,15 +132,15 @@ namespace IgraKosIstrel
                 pbBackground.CreateGraphics().DrawImageUnscaled(bufl, 0, 0);
             }
 
+
+
         }
 
         private void timer2_Tick(object sender, EventArgs e)
         {
-            Bitmap bufl = new Bitmap(pbBackground.Width, pbBackground.Height);
-
             using (Graphics g = Graphics.FromImage(bufl))
             {
-                w.drawWorldAfter(g, ball, timer2, states1, button1);
+                w.drawWorldAfter(g, ball, timer2, states, button1);
                 
                 pbBackground.CreateGraphics().DrawImageUnscaled(bufl, 0, 0);
             }
@@ -149,7 +153,7 @@ namespace IgraKosIstrel
             if (firstTime)
             {
                 timer1.Enabled = false;
-                timer2.Interval = 1;
+                timer2.Interval = 20;
                 timer2.Enabled = true;
                 timer2.Start();
                 ball.angle = -arc.angle;
@@ -232,6 +236,17 @@ namespace IgraKosIstrel
 
             // call the base class to handle other key events
             return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private void btnRestart_Click(object sender, EventArgs e)
+        {
+            Init(level);
+            w.lives = 5;
+            w.score = 0;
+            tbLives.Text = w.lives.ToString();
+            tbScore.Text = w.score.ToString();
+            button1.Enabled = true;
+            startup();
         }
 
 
